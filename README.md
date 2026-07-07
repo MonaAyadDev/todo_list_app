@@ -3,8 +3,8 @@
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="screens\Screenshot_1783410791.png" width="24%" alt="Splash Screen" />
-  <img src="screens\Screenshot_1783410725.png" width="24%" alt="Login Screen" />
+  <img src="screens\splash.png" width="24%" alt="Splash Screen" />
+  <img src="screens/login.png" width="24%" alt="Login Screen" />
 </p>
 
 
