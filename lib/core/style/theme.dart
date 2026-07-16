@@ -7,7 +7,7 @@ ThemeData theme() {
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.background,
       elevation: 0,
-      surfaceTintColor: AppColors.black,
+      surfaceTintColor: AppColors.charcoalGrey,
       centerTitle: true,
     ),
     dividerColor: Colors.transparent,
@@ -17,7 +17,7 @@ ThemeData theme() {
         backgroundColor: AppColors.primary,
         minimumSize: const Size(double.infinity, 60),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        foregroundColor: AppColors.background,
+        foregroundColor: AppColors.charcoalGrey,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -32,7 +32,7 @@ ThemeData theme() {
       onSurface: AppColors.black,
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: AppColors.accent,
+      fillColor: AppColors.marshmallowWhite,
       filled: true,
       hintStyle: TextStyles.caption2,
       border: UnderlineInputBorder(

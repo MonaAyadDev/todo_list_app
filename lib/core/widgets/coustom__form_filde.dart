@@ -3,9 +3,18 @@ import 'package:to_do_list_app/core/style/colors.dart';
 import 'package:to_do_list_app/core/style/text_style.dart';
 
 class CoustomFormFilde extends StatelessWidget {
-  const CoustomFormFilde({super.key, required this.label, required this.hint});
+  const CoustomFormFilde({
+    super.key,
+    required this.label,
+    required this.hint,
+    this.validator,
+    this.controller,
+  });
   final String label;
   final String hint;
+  final String? Function(String?)? validator;
+
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +34,11 @@ class CoustomFormFilde extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: AppColors.primary),
             ),
-            hintText: 'enter your email',
+            hintText: hint,
             hintStyle: TextStyles.caption2,
           ),
+          validator: validator,
+          controller: controller,
         ),
       ],
     );

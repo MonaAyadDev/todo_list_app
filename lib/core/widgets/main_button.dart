@@ -40,7 +40,7 @@ class MainButton extends StatelessWidget {
           Text(
             text,
             style: TextStyles.body.copyWith(
-              color: textColor ?? Colors.white, // لون افتراضي أبيض
+              color: textColor ?? AppColors.charcoalGrey, // لون افتراضي أبيض
               fontWeight: FontWeight.w600,
               fontSize: 18,
             ),

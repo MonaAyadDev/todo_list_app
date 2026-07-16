@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:to_do_list_app/core/constans/app_constant.dart';
 import 'package:to_do_list_app/core/style/colors.dart';
 import 'package:to_do_list_app/core/style/text_style.dart';
 import 'package:to_do_list_app/core/widgets/coustom__form_filde.dart';
 import 'package:to_do_list_app/core/widgets/main_button.dart';
 import 'dart:io';
+
+import 'package:to_do_list_app/futers/auth/data/model/user_model.dart';
+import 'package:to_do_list_app/futers/home/screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +19,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final formkay = GlobalKey<FormState>();
+  final nameControler = TextEditingController();
+
   final picker = ImagePicker();
   XFile? image;
 
@@ -71,35 +79,77 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: showImageSourceDialog,
+        child: Form(
+          key: formkay,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: showImageSourceDialog,
 
-              child: CircleAvatar(
-                radius: 60,
-                backgroundColor: AppColors.primary.withAlpha(80),
-                backgroundImage: image != null
-                    ? FileImage(File(image!.path))
-                    : null,
-                child: image == null ? Icon(Icons.person, size: 60) : null,
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: AppColors.primary.withAlpha(80),
+                  backgroundImage: image != null
+                      ? FileImage(File(image!.path))
+                      : null,
+                  child: image == null ? Icon(Icons.person, size: 60) : null,
+                ),
               ),
-            ),
-            SizedBox(height: 35),
-            Text('Creat Your Profile', style: TextStyles.title2),
-            SizedBox(height: 20),
-            Text(
-              'Add Your Email And pofile picture',
-              style: TextStyles.caption2,
-            ),
-            SizedBox(height: 25),
+              SizedBox(height: 35),
+              Text('Creat Your Profile', style: TextStyles.title2),
+              SizedBox(height: 20),
+              Text(
+                'Add Your Name And pofile picture',
+                style: TextStyles.caption2,
+              ),
+              SizedBox(height: 25),
 
-            CoustomFormFilde(label: 'Full Name :', hint: 'enter your email'),
-            SizedBox(height: 40),
+              CoustomFormFilde(
+                label: 'Full Name :',
+                hint: 'Enter Your Name',
+                validator: (value) {
+                  // ignore: unnecessary_null_comparison
+                  if (value!.isEmpty) {
+                    return 'Please enter your Name';
+                  } else if (value.length < 4) {
+                    return 'Please enter valid Name';
+                  }
+                  return null;
+                },
+                controller: nameControler,
+              ),
+              SizedBox(height: 40),
 
-            MainButton(text: 'Continue', onPressed: () {}),
-          ],
+              MainButton(
+                text: 'Continue',
+                onPressed: () {
+                  if (formkay.currentState?.validate() ?? false) {
+                    Hive.box<UserModel>(AppConstant.userBox)
+                        .add(
+                          UserModel(
+                            name: nameControler.text,
+                            image: image?.path ?? "",
+                          ),
+                        )
+                        .then((v) {
+                          Navigator.pushReplacement(
+                            // ignore: use_build_context_synchronously
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
+                        })
+                        .catchError((e) {
+                          // ignore: avoid_print
+                          print(e);
+                        });
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
