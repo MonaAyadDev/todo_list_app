@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list_app/core/style/colors.dart';
 import 'package:to_do_list_app/core/style/text_style.dart';
 import 'package:to_do_list_app/futers/home/widgets/home_app_bar.dart';
+import 'package:to_do_list_app/futers/home/widgets/list_tasks.dart';
 import 'package:to_do_list_app/futers/home/widgets/stats_card.dart';
-import 'package:to_do_list_app/futers/home/widgets/task_item_card.dart';
+import 'package:to_do_list_app/futers/tasks/screen/add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,7 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddTaskScreen()),
+          );
+          setState(() {});
+        },
         backgroundColor: const Color(0xFFCE93D8), // Soft Lavender
         icon: const Icon(Icons.add, color: Colors.white),
         label: const Text(
@@ -33,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HomeAppBar(),
+              HomeAppBar(
+                onTaskDeleted: () {
+                  setState(() {});
+                },
+              ),
               const SizedBox(height: 24),
               const StatsCard(),
               const SizedBox(height: 32),
@@ -49,21 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ListTasks extends StatelessWidget {
-  const ListTasks({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        itemBuilder: (context, index) => const TaskItemCard(),
-        separatorBuilder: (context, index) => const SizedBox(height: 29),
-        itemCount: 17,
       ),
     );
   }

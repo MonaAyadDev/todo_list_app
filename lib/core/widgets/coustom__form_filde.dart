@@ -9,13 +9,17 @@ class CoustomFormFilde extends StatelessWidget {
     required this.hint,
     this.validator,
     this.controller,
+    this.maxLines,
+    this.readOnly,
+    this.onTap,
   });
   final String label;
   final String hint;
   final String? Function(String?)? validator;
-
+  final int? maxLines;
   final TextEditingController? controller;
-
+  final bool? readOnly;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,6 +30,9 @@ class CoustomFormFilde extends StatelessWidget {
           style: TextStyles.subtitle.copyWith(fontWeight: FontWeight.bold),
         ),
         TextFormField(
+          onTap: onTap,
+          readOnly: readOnly ?? false,
+          maxLines: maxLines,
           onTapOutside: (event) {
             FocusScope.of(context).unfocus();
           },

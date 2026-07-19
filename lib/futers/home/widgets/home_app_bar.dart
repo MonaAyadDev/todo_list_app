@@ -6,9 +6,11 @@ import 'package:to_do_list_app/core/constans/app_constant.dart';
 import 'package:to_do_list_app/core/style/colors.dart';
 import 'package:to_do_list_app/core/style/text_style.dart';
 import 'package:to_do_list_app/futers/auth/data/model/user_model.dart';
+import 'package:to_do_list_app/futers/home/widgets/button_delete.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key});
+  const HomeAppBar({super.key, required this.onTaskDeleted});
+  final VoidCallback onTaskDeleted;
   @override
   Widget build(BuildContext context) {
     final box = Hive.box<UserModel>(AppConstant.userBox);
@@ -39,6 +41,7 @@ class HomeAppBar extends StatelessWidget {
               ],
             ),
           ),
+          ButtonDelete(onDeleted: onTaskDeleted),
           IconButton(
             onPressed: () {},
             icon: const Icon(

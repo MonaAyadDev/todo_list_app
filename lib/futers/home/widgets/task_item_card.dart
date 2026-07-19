@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_app/core/style/colors.dart';
 import 'package:to_do_list_app/core/style/text_style.dart';
+import 'package:to_do_list_app/futers/tasks/data/model/task_model.dart';
 
 class TaskItemCard extends StatelessWidget {
-  const TaskItemCard({super.key});
-
+  const TaskItemCard({super.key, required this.task});
+  final TaskModel task;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,7 +22,7 @@ class TaskItemCard extends StatelessWidget {
               width: 20,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: AppColors.softCoral,
+                color: Color(task.color),
               ),
             ),
             SizedBox(width: 20),
@@ -30,9 +31,9 @@ class TaskItemCard extends StatelessWidget {
                 spacing: 8,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Flutter UI &  Design', style: TextStyles.title2),
+                  Text(task.title, style: TextStyles.title2),
                   Text(
-                    'Design themed task screens',
+                    task.descrtion,
                     style: TextStyles.caption2.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
@@ -47,12 +48,12 @@ class TaskItemCard extends StatelessWidget {
 
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      color: AppColors.softCoral.withAlpha(10),
+                      color: Color(task.color).withAlpha(10),
                     ),
                     child: Text(
                       'Pending',
                       style: TextStyles.subtitle.copyWith(
-                        color: AppColors.softCoral,
+                        color: Color(task.color),
                       ),
                     ),
                   ),
